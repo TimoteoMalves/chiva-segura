@@ -906,6 +906,6 @@
     export default App;
     ```
     
-    ![biscoitoAberto.png]([React%20Native%2091316926d0e4499c8bdead8e0140310a/biscoitoAberto.png](https://github.com/AMF-Sistemas-Informacao/desenvolvimento_sistemas_ii_2023_02/blob/aula01/biscoito.png)https://github.com/AMF-Sistemas-Informacao/desenvolvimento_sistemas_ii_2023_02/blob/aula01/biscoito.png)
+    [biscoitoAberto.png](https://github.com/AMF-Sistemas-Informacao/desenvolvimento_sistemas_ii_2023_02/blob/aula01/biscoito.png)
     
-    ![biscoito.png]([React%20Native%2091316926d0e4499c8bdead8e0140310a/biscoito.png](https://github.com/AMF-Sistemas-Informacao/desenvolvimento_sistemas_ii_2023_02/blob/aula01/biscoito.png)https://github.com/AMF-Sistemas-Informacao/desenvolvimento_sistemas_ii_2023_02/blob/aula01/biscoito.png)
+    [biscoito.png](https://github.com/AMF-Sistemas-Informacao/desenvolvimento_sistemas_ii_2023_02/blob/aula01/biscoito.png)
