@@ -21,7 +21,7 @@
     - [ ]  Inicie o projeto digitando:
         
         ```
-        expo start
+        npm start
         ```
         
 - [ ]  Utilize o dispositivo móvel ou um emulador para visualizar o projeto.
