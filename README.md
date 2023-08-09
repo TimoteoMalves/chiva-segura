@@ -9,7 +9,7 @@
     - [ ]  Abra o terminal e crie um novo projeto executando o seguinte comando:
         
         ```
-        npx create-expo-app meuapp
+        npx create-expo-app meuapp ou npx create-expo-app --template
         ```
         
     - [ ]  Após a criação do projeto, acesse a pasta do projeto através do comando:
