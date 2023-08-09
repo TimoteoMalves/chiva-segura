@@ -21,7 +21,7 @@
     - [ ]  Inicie o projeto digitando:
         
         ```
-        npm start
+        npm start ou npm run web (somente se não funcionar no celular)
         ```
         
 - [ ]  Utilize o dispositivo móvel ou um emulador para visualizar o projeto.
