@@ -1521,7 +1521,105 @@
   -  Agora finalizamos nossa aplicação! =D
 
 
-## Atividade Prática
+## Desafios Extras
   1) CRIAR UM CORAÇÃO DENTRO DE CADA CARD E CLICAR NELE PARA FAVORITAR O JOGO
   2) EXCLUIR JOGOS DA LISTA
   3) INSERIR OS DADOS NO MODAL DO JOGO CLICADO
+
+
+## ATIVIDADE PRÁTICA
+
+- USANDO COMO BASE O PROJETO JÁ CRIADO NA PASTA PROJETO_CONFIGURADO, CRIE UM APP DE FILMES
+- ESTE APP DEVERÁ TER UM CABEÇALHO COM UM TÍTULO E UMA LOGO
+- ESTE APP DEVERÁ TER UM RODAPÉ COM UM @APP_FILMES E UM LINK PARA ACESSAR A NETFLIX
+- O CONTEÚDO DO APP DEVERÁ SER APRESENTADO NO FORMATO DE CARDS, EM QUE CADA CARD MOSTRA UM FILME
+- REALIZE A APRESENTAÇÃO DOS CARDS COM OS FILMES EM ORDEM ALFABÉTICA
+- CRIE A FUNCIONALIDADE DE PERMITIR A EXCLUSÃO DO FILME
+- CRIE UM MODAL QUE APRESENTE O TÍTULO DO FILME E UM VÍDEO DO YOUTUBE COM O TRAILER DELE
+- OS DADOS USADOS PARA ESTE APP ESTÃO NESTE ARRAY DE OBJETOS
+
+    ```JSX
+        const filmes = [
+      {
+        titulo: "O Senhor dos Anéis: A Sociedade do Anel",
+        diretor: "Peter Jackson",
+        ano: 2001,
+        genero: "Fantasia",
+        avaliacao: 4.8,
+        imagem: "https://i.ytimg.com/vi/Xy3nzSMZ4-M/maxresdefault.jpg"
+      },
+      {
+        titulo: "Interestelar",
+        diretor: "Christopher Nolan",
+        ano: 2014,
+        genero: "Ficção Científica",
+        avaliacao: 4.7,
+        imagem: "https://sagittariusrecords.com.br/wp-content/uploads/2021/10/A1smtRIAUvL._AC_SL1500_.jpg"
+      },
+      {
+        titulo: "Toy Story",
+        diretor: "John Lasseter",
+        ano: 1995,
+        genero: "Animação",
+        avaliacao: 4.9,
+        imagem: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/26E7C634EB29C137475AE05AC983080BAE7E2E3741C49987EEA2539A40A9262C/scale?width=1200&aspectRatio=1.78&format=jpeg"
+      },
+      {
+        titulo: "Pantera Negra",
+        diretor: "Ryan Coogler",
+        ano: 2018,
+        genero: "Ação",
+        avaliacao: 4.6,
+        imagem: "https://i0.wp.com/metagalaxia.com.br/wp-content/uploads/2022/11/pantera-negra-1.webp?fit=1920%2C1080&ssl=1"
+      },
+      {
+        titulo: "A Origem",
+        diretor: "Christopher Nolan",
+        ano: 2010,
+        genero: "Ficção Científica",
+        avaliacao: 4.8,
+        imagem: "https://ovicio.com.br/wp-content/uploads/2020/08/20200802-filme-a-origem.jpg"
+      },
+      {
+        titulo: "Os Incríveis",
+        diretor: "Brad Bird",
+        ano: 2004,
+        genero: "Animação",
+        avaliacao: 4.7,
+        imagem: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/C49E66CA232E9DEA180DA2F759592E5BA4F6EF0052C1FC65C6D2A3F89642A5E1/scale?width=1200&aspectRatio=1.78&format=jpeg"
+      },
+      {
+        titulo: "A Viagem de Chihiro",
+        diretor: "Hayao Miyazaki",
+        ano: 2001,
+        genero: "Animação",
+        avaliacao: 4.9,
+        imagem: "https://2.bp.blogspot.com/-IpUQ8xhIg8M/XpUlWryQyTI/AAAAAAAAJx4/XOknHqAffBYBii2iz7Mayx06hc7WbbgOwCK4BGAYYCw/s1600/a%2Bviagem%2Bde%2Bchihiro.png"
+      },
+      {
+        titulo: "Cidade de Deus",
+        diretor: "Fernando Meirelles",
+        ano: 2002,
+        genero: "Drama",
+        avaliacao: 4.8,
+        imagem: "https://updatecharts.com.br/wp-content/uploads/2022/08/cidade_de_deus.jpg"
+      },
+      {
+        titulo: "Vingadores: Ultimato",
+        diretor: "Anthony e Joe Russo",
+        ano: 2019,
+        genero: "Ação",
+        avaliacao: 4.6,
+        imagem: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/64EB1E97BD6DD3DE23D3C195BDA2672A251E23D27DC9C6831339A9EA87B16238/scale?width=1200&aspectRatio=1.78&format=jpeg"
+      },
+      {
+        titulo: "Matrix",
+        diretor: "The Wachowskis",
+        ano: 1999,
+        genero: "Ficção Científica",
+        avaliacao: 4.7,
+        imagem: "https://deliriumnerd.com/wp-content/uploads/2021/11/blog-cyncardoso-cultura-pop-cinema-e-series-matrix-4-vem-ai-1.jpg"
+      }
+    ];
+
+    ``` 
