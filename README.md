@@ -1519,3 +1519,9 @@
       ```
       
   -  Agora finalizamos nossa aplicação! =D
+
+
+## Atividade Prática
+  1) CRIAR UM CORAÇÃO DENTRO DE CADA CARD E CLICAR NELE PARA FAVORITAR O JOGO
+  2) EXCLUIR JOGOS DA LISTA
+  3) INSERIR OS DADOS NO MODAL DO JOGO CLICADO
