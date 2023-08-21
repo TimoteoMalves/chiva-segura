@@ -28,5 +28,6 @@ module.exports = {
     "no-console": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
+    "consistent-return": "off",
   },
 };
