@@ -5,7 +5,7 @@ export default function App() {
  
   return (
     <View style={styles.container}>
-      <Text>Hello World</Text>
+      <Text>Rotas e Navegação</Text>
     </View>
   );
 }
