@@ -6,6 +6,12 @@
 
 -  Para criar um projeto em React Native utilizando o Expo, siga os seguintes passos:
     -  Certifique-se de ter o Node.js instalado em sua máquina.
+ 
+    -  Podemos instalar o Expo CLI globalmente
+
+        ```
+        npm i -g expo-cli
+        ```
     -  Abra o terminal e crie um novo projeto executando o seguinte comando:
         
         ```
