@@ -64,7 +64,7 @@
 -  Rode sua aplicação e veja o resultado
 
 ## Atividade Prática
--  Para que possamos exercitar os conceitos vistos nas últimas aulas e o conteúdo de hoje sobre navegação, vamos criar um projeto com rotas 
+-  Para que possamos exercitar os conceitos vistos nas últimas aulas e o conteúdo de hoje sobre navegação, vamos criar um projeto com rotas; 
 -  O Projeto para ser construído está seguindo esse [Figma](https://www.figma.com/file/hXfYrMBCAqlZyENIvWT7Da/Delivery-App?type=design&node-id=0%3A1&mode=design&t=BIfpWCaKBWsW2RTj-1)
 -  Temos uma página inicial (Home), depois somos direcionados para a página de registro (Register);
 -  Após realizar o registro, somos direcionados para a página de dados pessoais (Personal Page);
