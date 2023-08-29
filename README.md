@@ -324,7 +324,7 @@
       function Contact () {
       
           return (
-              <View style={styles.container}>
+              <View>
               <Text>Contact</Text>
             </View>
           )
