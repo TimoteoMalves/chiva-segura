@@ -317,20 +317,20 @@
   - Adicione uma pasta em **pages** chamada **Contact** e os arquivos **index.jsx** e **styles.js** nela
       
       ```jsx
-      //PAGES/Contact/index.jsx
-      
-      import styles from './styles';
-      
-      function Contact () {
-      
-          return (
-              <View>
-              <Text>Contact</Text>
-            </View>
-          )
-      }
-      
-      export default Contact;
+      //PAGES/Contact
+        import { View, Text } from 'react-native';
+        import styles from './styles';
+        
+        function Contact () {
+        
+            return (
+                <View>
+                <Text>Contact</Text>
+              </View>
+            )
+        }
+        
+        export default Contact;
       ```
       
   - No App.jsx vamos importar e criar a navegação desta página
