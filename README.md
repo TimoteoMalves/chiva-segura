@@ -63,3 +63,5 @@
     
 -  Rode sua aplicação e veja o resultado
 
+-  Projeto para ser construído seguindo esse [Figma](https://www.figma.com/file/hXfYrMBCAqlZyENIvWT7Da/Delivery-App?type=design&node-id=0%3A1&mode=design&t=BIfpWCaKBWsW2RTj-1)
+
