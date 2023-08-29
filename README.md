@@ -317,7 +317,7 @@
   - Adicione uma pasta em **pages** chamada **Contact** e os arquivos **index.jsx** e **styles.js** nela
       
       ```jsx
-      //PAGES/Contact
+      //PAGES/Contact/index.jsx
       
       import styles from './styles';
       
@@ -368,7 +368,7 @@
               />
               <Stack.Screen 
                 name="Contact" 
-                component={About}
+                component={Contact}
                 options={{ title: 'Tela Contact' }}
               />
             </Stack.Navigator>
