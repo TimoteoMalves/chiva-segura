@@ -63,5 +63,11 @@
     
 -  Rode sua aplicação e veja o resultado
 
--  Projeto para ser construído seguindo esse [Figma](https://www.figma.com/file/hXfYrMBCAqlZyENIvWT7Da/Delivery-App?type=design&node-id=0%3A1&mode=design&t=BIfpWCaKBWsW2RTj-1)
+## Atividade Prática
+-  Para que possamos exercitar os conceitos vistos nas últimas aulas e o conteúdo de hoje sobre navegação, vamos criar um projeto com rotas 
+-  O Projeto para ser construído está seguindo esse [Figma](https://www.figma.com/file/hXfYrMBCAqlZyENIvWT7Da/Delivery-App?type=design&node-id=0%3A1&mode=design&t=BIfpWCaKBWsW2RTj-1)
+-  Temos uma página inicial (Home), depois somos direcionados para a página de registro (Register);
+-  Após realizar o registro, somos direcionados para a página de dados pessoais (Personal Page);
+-  Nessa página temos 3 íconos (Tab Navigation), em que podemos ser direcionamos para a Home, Register e Contact;
+-  Na tela de Contact temos a possibilidade de retornar para a Home;
 
