@@ -9,6 +9,8 @@ import Home from '../pages/Home';
 import About from '../pages/About';
 import Contact from '../pages/Contact';
 
+import CustomDrawer from '../components/CustomDrawer';
+
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -64,6 +66,7 @@ export default function Routes() {
  
   return (
     <Drawer.Navigator
+        drawerContent={CustomDrawer}
         screenOptions={{
             headerShown: false,
 

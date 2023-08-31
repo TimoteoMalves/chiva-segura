@@ -1000,7 +1000,160 @@
         );
       }
       ```
+    - Feito, agora o nosso Drawer está personalizado
+    - Como recurso adicional, podemos personalizar todo nosso menu lateral que é fornecido automaticamente pelo Drawer
+    - Vamos criar de **src**, uma pasta chamada **components e um arquivo chamado CustomDrawer.js**
+    - Neste arquivo adicione o seguinte código
         
+        ```c
+        //SRC/COMPONENTS/CustomDrawer.js
+        
+        import React from 'react';
+        import { View, Text, Image } from 'react-native'; 
+        
+        import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+        
+        export default function CustomDrawer(props){
+        //DrawerContentScrollView = permite ter um scrool nesse menu drawer
+        //DrawerItemList = adiciona o menu de navegação que tínhamos antes via props
+        //recebemos via props as rotas de navegação do arquivo index.js em routes
+          return(
+            <DrawerContentScrollView {...props}>
+              <View style={{
+                width: '100%',
+                height: 85,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 30,
+              }}
+              >
+                <Image
+                  source={require('../assets/perfil.png')}
+                  style={{ width: 65, height: 65 }}
+                />
+        
+                <Text style={{ color:'#FFF', fontSize: 17, marginTop: 5, marginBottom: 35 }}>
+                  Bem-vindo!
+                </Text>
+              </View>
+        
+              <DrawerItemList {...props}/>
+        
+            </DrawerContentScrollView>
+          )
+        }
+        
+        ```
+        
+    - Agora vamos adicionar esse componente no nosso Drawer
+    - No arquivo **index.js** da pasta **routes**, ajuste o código
+        
+        ```jsx
+        import { AntDesign } from '@expo/vector-icons'; 
+        import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+        import { createDrawerNavigator } from '@react-navigation/drawer';
+        
+        import StackRoutes from './stackRoutes';
+        
+        import Home from '../pages/Home';
+        import About from '../pages/About';
+        import Contact from '../pages/Contact';
+        
+        //importamos nosso componente recém criado
+        import CustomDrawer from '../components/CustomDrawer';
+        
+        const Tab = createBottomTabNavigator();
+        const Drawer = createDrawerNavigator();
+        
+        /* <Tab.Navigator
+                screenOptions={{
+                  //headerShown: false,
+                  //tabBarShowLabel: false,
+                  tabBarHideOnKeyboard: true,
+                  tabBarActiveTintColor: '#FFF',
+                  tabBarStyle: {
+                    backgroundColor: '#000',
+                    paddingBottom: 4,
+                    paddingTop: 4,
+                    height: '7%',
+                    borderTopWidth: 2
+                  }
+                }}
+              >
+                <Tab.Screen
+                  name="HomeStack"
+                  component={StackRoutes}
+                  options={{
+                    tabBarLabel: 'Inicio',
+                    tabBarIcon: ({ color, size }) => { 
+                      return <AntDesign name="home" size={size} color={color} />
+                     }
+                  }}
+                />
+                <Tab.Screen
+                  name="About"
+                  component={About}
+                  options={{
+                    tabBarLabel: 'Inicio',
+                    tabBarIcon: ({ color, size }) => { 
+                      return <AntDesign name="infocirlceo" size={size} color={color} />
+                     }
+                  }}
+                />
+                <Tab.Screen
+                  name="Contact"
+                  component={Contact}
+                  options={{
+                    tabBarLabel: 'Inicio',
+                    //headerShown: false,
+                    tabBarIcon: ({ color, size }) => { 
+                      return <AntDesign name="contacts" size={size} color={color} />
+                     }
+                  }}
+                />
+                </Tab.Navigator> */
+        
+        export default function Routes() {
+         //estamos dizendo que agora o conteúdo do menu drawer é oriundo de CustomDrawer
+          return (
+            <Drawer.Navigator
+                drawerContent={CustomDrawer}
+                screenOptions={{
+                    headerShown: false,
+        
+                    drawerStyle: {
+                        backgroundColor: '#121212'
+                    },
+        
+                    drawerActiveBackgroundColor: '#3B3DBF',
+                    drawerActiveTintColor: "#FFF",
+        
+                    drawerInactiveBackgroundColor: '#CCC',
+                    drawerInactiveTintColor: "#000",
+                }}
+            >
+                <Drawer.Screen
+                    name="HomeStack"
+                    component={StackRoutes}
+                    options={{
+                        title: 'Inicio'
+                    }}
+                />
+                <Drawer.Screen
+                     name="About"
+                     component={About}
+                />
+                <Drawer.Screen
+                    name="Contact"
+                    component={Contact}
+                />
+            </Drawer.Navigator>
+          );
+        }
+        ```
+        
+    - Na pasta **assets** adicione esse arquivo de imagem (pode ser qualquer imagem para testar)
+    - Pronto, agora temos um menu do tipo drawer customizado
 
 ## Atividade Prática
 -  Para que possamos exercitar os conceitos vistos nas últimas aulas e o conteúdo de hoje sobre navegação, vamos criar um projeto com rotas; 
