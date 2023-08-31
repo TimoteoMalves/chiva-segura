@@ -10,7 +10,7 @@ function About () {
   //useLayoutEffect é sícrono
   //primeiro vai rodar isso e depois renderizar o nosso conteúdo
   useLayoutEffect(() => {
-    alert(route.params?.name)
+    //alert(route.params?.name)
     navigation.setOptions({
       title: route.params?.name === undefined ? 'Tela About' : `Olá ${route.params?.name}`
     })
