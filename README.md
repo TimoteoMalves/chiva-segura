@@ -205,7 +205,7 @@
         }
       })
 
-      ```
+  ```
   - Pronto, agora ao sair do nosso aplicativo e retornar, temos os dados salvos
 
 
@@ -213,9 +213,9 @@
 
 ## Aplicativo de Gestão de Pessoas Colaboradoras
 
-  -  Para o desenvolvimento deste projeto, vamos usar esse (Figma)[ https://www.figma.com/file/XcoekGaK6gdC9pPmNvH7iJ/Manage-Your-Cards-(Community)?type=design&node-id=0%3A1&mode=design&t=oFMhQx8suZMkMZSs-1]
+  -  Para o desenvolvimento deste projeto, vamos usar esse [Figma](https://www.figma.com/file/XcoekGaK6gdC9pPmNvH7iJ/Manage-Your-Cards-(Community)?type=design&node-id=0%3A1&mode=design&t=oFMhQx8suZMkMZSs-1)
   - Vocês irão criar uma tela inicial seguindo o layout proposto e no botão "Get Started", a pessoa usuária deve ser direcionada para a segunda tela do Figma (use stack navigation)
-  - Na segunda tela, teremos a listagem de todos usuários capturados nesta API - https://crud-user-mftn.onrender.com/users
+  - Na segunda tela, teremos a listagem de todos usuários capturados nesta [API](https://crud-user-mftn.onrender.com/users)
   - Liste estes usuários seguindo o padrão de cards do layout
   - Adicione uma busca que ao digitar um nome e clicar na barra de pesquisa, ele mostre os resultados nos cards selecionados
   - Crie um menu na parte inferior (tab navigation), não precisa direcionar para nenhum lugar do aplicativo em específico 
