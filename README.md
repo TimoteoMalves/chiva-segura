@@ -221,7 +221,10 @@
   - Crie um menu na parte inferior (tab navigation), não precisa direcionar para nenhum lugar do aplicativo em específico 
   - No botão 'details', ao clicar, a pessoa usuária será direcionada para uma tela que mostra os detalhes daquela pessoa em específico, para isso, passe os dados dela via parâmetros da rota
   - Na tela de detalhes, capture estes dados e mostre de acordo com o layout. O botão 'return' vai direcionar de volta para a tela principal com todos usuários
- 
+  
+  **Extra**
+  - Crie um icone de coração para favoritar usuários
+  - Salve os usuários favoritos para que ao sair e retornar ao aplicativo, essas suas preferências estejam armazenadas (async storage)
 
   
 
