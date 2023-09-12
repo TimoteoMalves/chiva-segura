@@ -33,181 +33,496 @@
 -  Utilize o dispositivo móvel ou um emulador para visualizar o projeto.
 -  E com isso, você já terá criado um projeto em React Native utilizando o Expo.
 
-# Criando um projeto com Requisição para uma API
+# Realizando login em um aplicativo e usando Context e estilizando com Styled Components
 
-## Trabalhando com axios
+## Context e Async Storage
     
-  - Para que possamos trabalhar com requisições para API's, podemos usar o **Axios**
-  - Vamos instalar ele no projeto - **npm i axios**
-  - Agora vamos criar dentro da pasta src, uma pasta chamada services
-  - Nesta pasta services, vamos criar um arquivo api.js e inserir esse código
+  - Para que possamos trabalhar com estes recursos, vamos precisar de algumas libs
+  - Vamos instalar no projeto
+    - **npm i @react-native-async-storage/async-storage**
+    - **npm i @react-navigation/native-stack**
+    - **npm i axios**
+    - **npm i @react-native-gesture-handler**
+    - **npm i @styled-components**
+  - No arquivo App.jsx, vamos adicionar o seguinte código:
+    ```js
+    // APP.JSX
+
+    import 'react-native-gesture-handler';
+    import React from 'react';
+    import {StatusBar} from 'react-native';
+
+    import {NavigationContainer} from '@react-navigation/native';
+
+    import Routes from './src/routes';
+
+    import AuthProvider from './src/contexts/auth';
+
+    export default function App() {
       
-      ```jsx
-      import axios from 'axios';
+      return (
+        <NavigationContainer>
+          <AuthProvider>
+            <StatusBar backgroundColor="#F0F4FF" barStyle="dark-content" />
+            <Routes />
+          </AuthProvider>
+        </NavigationContainer>
+      );
+    }
 
-      //api = https://crud-user-mftn.onrender.com/
-      //rota = users
+    ```
+  - Vamos criar na pasta src, uma pasta chamada services e adicionar o arquivo api.js
+    ```js
+    //SRC/SERVICES/API.JS
 
-      const api = axios.create({
-        baseURL: 'https://crud-user-mftn.onrender.com/'
-      });
+    import axios from 'axios';
 
-      export default api;
-      ```
-      
-  - Agora podemos realizar requisições para essa API
-  - No nosso App.jsx vamos modificar os códigos
+    const api = axios.create({
+      baseURL: 'https://crud-user-mftn.onrender.com/',
+    });
 
-      ```jsx
-      import React, { useEffect, useState} from 'react';
-      import { View, Text, StyleSheet, FlatList, ActivityIndicator} from 'react-native';
+    export default api;
 
-      import api from './src/services/api';
-      import Users from './src/components/Users';
+    ```
+  - Agora na pasta src, vamos criar uma pasta contexts dentro dela
+  - Nessa pasta contexts, crie um arquivo auth.js e adicione este código
+    ```js
+    //SRC/CONTEXTS/AUTH.JS
 
-      export default function App() {
-        const [users, setUsers] = useState([]);
-        const [loading, setLoading] = useState(true);
+    import React, { createContext, useState, useEffect } from 'react';
+    import { Alert } from 'react-native';
 
-        useEffect(()=> {
+    import api from '../services/api';
+    import { useNavigation } from '@react-navigation/native';
 
-          async function loadUsers(){
-            const response = await api.get('users');
-            // console.log(response.data);
-            setUsers(response.data);
+    import AsyncStorage from '@react-native-async-storage/async-storage';
+
+    export const AuthContext = createContext({});
+
+    function AuthProvider({ children }) {
+      const [user, setUser] = useState(null);
+      const [loadingAuth, setLoadingAuth] = useState(false);
+      const [loading, setLoading] = useState(true);
+
+      const navigation = useNavigation();
+
+      useEffect(() => {
+
+        async function loadStorage() {
+          const storageUser = await AsyncStorage.getItem('@authToken');
+          const storedUserString = await AsyncStorage.getItem('@user');
+          console.log(storageUser);
+          console.log(storedUserString);
+          if (storageUser) {
+            console.log(storedUserString)
+            setUser(JSON.parse(storedUserString));
+            //navigation.navigate('Home');
             setLoading(false);
+
+            //navigation.navigate('SignIn');
+
           }
+          setLoading(false);
+        }
+        setLoading(true);
+        loadStorage();
+      }, [])
 
-          loadUsers();
+      async function signIn(email, password) {
+        setLoadingAuth(true);
 
-        }, []);
-        
+        //console.log(email, password)
 
+        try {
+
+          const response = await api.post('auth/login', {
+            email: email,
+            password: password
+          })
+          //console.log(response.data)
+          const { token } = response.data;
+          const user = { email: email };
+
+
+          await AsyncStorage.setItem('@authToken', token);
+          await AsyncStorage.setItem('@user', JSON.stringify(user));
+          setUser(user);
+
+          api.defaults.headers['Authorization'] = `Bearer ${token}`;
+
+          setLoadingAuth(false);
+          //navigation.navigate('Home');
+
+        } catch (err) {
+          console.log("ERRO AO LOGAR ", err);
+          Alert.alert('E-mail ou senha incorretos!');
+          setLoadingAuth(false);
+        }
+      }
+
+      async function signOut() {
+        await AsyncStorage.clear()
+          .then(() => {
+            setUser(null);
+            navigation.navigate('SignIn');
+          })
+      }
+
+      return (
+        <AuthContext.Provider value={{ signed: !!user, user, signIn, signOut, loadingAuth, loading }}>
+          {children}
+        </AuthContext.Provider>
+      )
+      }
+
+      export default AuthProvider;
+      ```
+  - Agora crie dentro de src, uma pasta chamada routes e um arquivo index.js
+    ```js
+    //SRC/ROUTES/INDEX.JS
+
+    import React, { useContext } from 'react';
+    import { View, ActivityIndicator } from 'react-native';
+
+    import { AuthContext } from '../contexts/auth'
+
+    import AuthRoutes from './auth.routes';
+    import AppRoutes from './app.routes';
+
+    function Routes(){
+      const { signed, loading } = useContext(AuthContext);
 
       if(loading){
         return(
-          <View style={{ alignItems: 'center', justifyContent:'center', flex:1 }}>
-            <ActivityIndicator color="#121212" size={45} />
+          <View 
+          style={{
+            flex:1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#F0F4FF'
+          }}>
+            <ActivityIndicator size="large" color="#131313" />
           </View>
         )
-      } else {
-        return (
-          <View style={styles.container}>
-            
-            <FlatList
-            data={filmes}
-            keyExtractor={ item => String(item.id) }
-            renderItem={ ({ item }) => <Users data={item} /> }
-            />
-      
-          </View>
-        );
-      } 
-
       }
 
-      const styles = StyleSheet.create({
-        container:{
-          flex:1,
-        }
-      });
+      return(
+        signed ? <AppRoutes/> : <AuthRoutes/>
+      )
+    }
 
-      ```
-  - Pronto, agora temos os nossos dados coletados na API e podemos usar eles
-  - Lembre que é necessário criar um componente Users para mostrar esses dados
+    export default Routes;
+    ```
+  - Agora crie um arquivo dentro de routes, chamado app.routes.js
+    ```js
+    //SRC/ROUTES/APP.ROUTES.JS
 
-## Trabalhando com async storage
-    
-  - Para que possamos trabalhar com requisições para API's, podemos usar o **Async Storage**
-  - Vamos instalar essa biblioteca - **npm i @react-native-async-storage/async-storage**
-  - No arquivo App.jsx vamos testar com esse código
+    import React from 'react';
+    import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-  ```jsx
-      import React, { useState, useEffect }  from 'react';
-      import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+    import Home from '../pages/Home';
 
-      import AsyncStorage from '@react-native-async-storage/async-storage';
+    const AuthStack = createNativeStackNavigator();
 
-      export default function App() {
-        const [input, setInput] = useState('');
-        const [nome, setNome] = useState('');
+    function AuthRoutes() {
+        return (
+            <AuthStack.Navigator>
+                <AuthStack.Screen
+                    name="Home"
+                    component={Home}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+            </AuthStack.Navigator>
+        )
+    }
 
-        useEffect(()=>{
-          async function loadData(){
-            await AsyncStorage.getItem('@nome').then((value)=>{
-              setNome(value)
-            })
+    export default AuthRoutes;
+    ```
+  - Agora crie um arquivo dentro de routes, chamado auth.routes.js
+    ```js
+    //SRC/ROUTES/AUTH.ROUTES.JS
+
+    import React from 'react';
+    import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+    import SignIn from '../pages/SignIn';
+
+    const AuthStack = createNativeStackNavigator();
+
+    function AuthRoutes() {
+        return (
+            <AuthStack.Navigator>
+                <AuthStack.Screen
+                    name="SignIn"
+                    component={SignIn}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+            </AuthStack.Navigator>
+        )
+    }
+
+    export default AuthRoutes;
+    ```
+  - Vamos criar uma pasta chamada pages dentro de src
+  - Vamos criar uma pasta Home em pages, com os arquivos index.jsx e styles.js
+    ```js
+    //SRC/PAGES/HOME/INDEX.JSX
+
+    import React, { useContext } from 'react';
+    import { ActivityIndicator } from 'react-native';
+    import {
+        Container,
+        Message,
+        Name,
+        NewLink,
+        NewText,
+        LogoutButton,
+        LogoutText
+    } from './styles'
+
+
+    import { AuthContext } from '../../contexts/auth';
+
+    import { useNavigation } from '@react-navigation/native'
+
+    export default function Home() {
+        const { user, signOut, loading } = useContext(AuthContext);
+        const navigation = useNavigation();
+
+        if (loading) {
+            return (
+              <ActivityIndicator size={20} color="#000" />
+            )
           }
 
-          loadData();
+        return (
+            <Container>
+
+                <Message>
+                    Hey, bem vindo de volta!
+                </Message>
+
+                <Name numberOfLines={1} >
+                    {user && user.email}
+                </Name>
+
+                <NewLink onPress={() => navigation.navigate('Registrar')}>
+                    <NewText>Fazer registro</NewText>
+                </NewLink>
+
+                <LogoutButton onPress={() => signOut()}>
+                    <LogoutText>Sair</LogoutText>
+                </LogoutButton>
+            </Container>
+        )
+    }
+    ```
+
+    ```js
+    //SRC/PAGES/HOME/STYLES.JS
+    import styled from 'styled-components/native';
+
+    export const Container = styled.SafeAreaView`
+      flex: 1;
+      background-color: #F0F4FF;
+      align-items: center;
+    `;
+
+    export const Message = styled.Text`
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 24px;
+    `;
+
+    export const Name = styled.Text`
+      font-size: 24px;
+      margin-bottom: 24px;
+      margin-top: 8px;
+      padding: 0 14px;
+      color: #121212;
+    `;
+
+    export const NewLink = styled.TouchableOpacity`
+      background-color: #3b3dbf;
+      width: 90%;
+      height: 45px;
+      border-radius: 8px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    `;
+
+    export const NewText = styled.Text`
+      font-size: 18px;
+      font-weight: bold;
+      color: #FFF;
+    `;
+
+    export const LogoutButton = styled.TouchableOpacity`
+      justify-content: center;
+      align-items: center;
+      width: 90%;
+      height: 45px;
+      border-width: 1px;
+      border-radius: 8px;
+      border-color: #c62c36;
+    `;
+
+    export const LogoutText = styled.Text`
+      font-size: 18px;
+      font-weight: bold;
+      color: #c62c36;
+    `;
+    ```
+  - Vamos criar uma pasta SignIn em pages, com os arquivos index.jsx e styles.js
+    ```js
+    //SRC/PAGES/SIGNIN/INDEX.JSX
+    import React, { useState, useContext } from 'react';
+    import { Platform, ActivityIndicator } from 'react-native';
+    import LogoImg from '../../assets/logo.png';
+
+    import {
+      Background,
+      Container,
+      Logo,
+      AreaInput,
+      Input,
+      SubmitButton,
+      SubmitText,
+      Link,
+      LinkText
+    } from './styles';
+
+    import { useNavigation } from '@react-navigation/native';
+
+    import { AuthContext } from '../../contexts/auth'
+
+    export default function SignIn() {
+      const navigation = useNavigation();
+      const { signIn, loadingAuth } = useContext(AuthContext);
+
+      const [email, setEmail] = useState('');
+      const [password, setPassword] = useState('');
 
 
-        }, []);
-
-
-        async function gravaNome(){
-          await AsyncStorage.setItem('@nome', input)
-          setNome(input);
-
-          setInput('');
-        }
-
-
-      return (
-        <View style={styles.container}>
-
-          <View style={styles.viewInput}>
-            <TextInput
-            style={styles.input}
-            value={input}
-            onChangeText={ (texto) => setInput(texto) }
-            />
-
-            <TouchableOpacity onPress={ gravaNome }>
-              <Text style={styles.botao}>+</Text>
-            </TouchableOpacity>
-          </View>
-
-
-          <Text style={styles.nome}>{nome}</Text>
-
-        </View>
-        );
+      function handleLogin() {
+        signIn(email, password);
       }
 
-      const styles = StyleSheet.create({
-        container:{
-          flex:1,
-          alignItems: 'center',
-          marginTop:35,
-        },
-        viewInput:{
-          flexDirection: 'row',
-          alignItems: 'center'
-        },
-        input:{
-          width: 350,
-          height: 40,
-          borderColor: '#000',
-          borderWidth: 1,
-          padding: 10,
-        },
-        botao:{
-          backgroundColor: '#222',
-          color: '#FFF',
-          height: 40,
-          padding: 10,
-          marginLeft: 4
-        },
-        nome:{
-          marginTop: 15,
-          fontSize: 30
-        }
-      })
+      return (
+        <Background>
 
-  ```
-  - Pronto, agora ao sair do nosso aplicativo e retornar, temos os dados salvos
+          <Container
+            behavior={Platform.OS === 'ios' ? 'padding' : ''}
+            enabled
+          >
+            <Logo
+              source={LogoImg}
+            />
 
+            <AreaInput>
+              <Input
+                placeholder="Seu email"
+                value={email}
+                onChangeText={(text) => setEmail(text.toLowerCase())}
+              />
+            </AreaInput>
+
+            <AreaInput>
+              <Input
+                placeholder="Sua senha"
+                value={password}
+                onChangeText={(text) => setPassword(text.toLowerCase())}
+                secureTextEntry={true}
+              />
+            </AreaInput>
+
+            <SubmitButton activeOpacity={0.8} onPress={handleLogin}>
+              {
+                loadingAuth ? (
+                  <ActivityIndicator size={20} color="#FFF" />
+                ) : (
+                  <SubmitText>Acessar</SubmitText>
+                )
+              }
+            </SubmitButton>
+
+            <Link onPress={() => navigation.navigate('SignUp')}>
+              <LinkText>Criar uma conta!</LinkText>
+            </Link>
+
+          </Container>
+
+        </Background>
+      )
+    }
+    ```
+    
+    ```js
+    //SRC/PAGES/SIGNIN/STYLES.JS
+    import styled from 'styled-components/native';
+
+    export const Background = styled.View`
+      flex:1;
+      background-color: #F0F4FF;
+    `;
+
+    export const Container = styled.KeyboardAvoidingView`
+      flex:1;
+      align-items: center;
+      justify-content: center;
+    `;
+
+    export const Logo = styled.Image`
+      margin-bottom: 25px;
+      width: 80%;
+      height: 250px;
+    `;
+
+    export const AreaInput = styled.View`
+      flex-direction: row;
+    `;
+
+    export const Input = styled.TextInput`
+      background-color: #FFF;
+      width: 90%;
+      font-size: 17px;
+      padding: 10px;
+      border-radius: 8px;
+      color: #121212;
+      margin-bottom: 15px;
+    `;
+
+
+    export const SubmitButton = styled.TouchableOpacity`
+      width: 90%;
+      height: 45px;
+      border-radius: 8px;
+      background-color: #3b3dbf;
+      margin-top: 10px;
+      align-items: center;
+      justify-content: center;
+    `;
+
+    export const SubmitText = styled.Text`
+      font-size: 20px;
+      color: #FFF;
+    `;
+
+    export const Link = styled.TouchableOpacity`
+      margin-top: 10px;
+      margin-bottom: 10px;
+    `;
+
+    export const LinkText = styled.Text`
+      color: #171717;
+    `;
+    ```
+  - SD
 
 # Trabalho Avaliativo - 25 pontos
 
