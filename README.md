@@ -43,7 +43,7 @@
     - **npm i @react-navigation/native-stack**
     - **npm i axios**
     - **npm i react-native-gesture-handler**
-    - **npm i @styled-components**
+    - **npm i styled-components**
   - No arquivo App.jsx, vamos adicionar o seguinte código:
     ```js
     // APP.JSX
