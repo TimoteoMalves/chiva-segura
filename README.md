@@ -42,7 +42,7 @@
     - **npm i @react-native-async-storage/async-storage**
     - **npm i @react-navigation/native-stack**
     - **npm i axios**
-    - **npm i @react-native-gesture-handler**
+    - **npm i react-native-gesture-handler**
     - **npm i @styled-components**
   - No arquivo App.jsx, vamos adicionar o seguinte código:
     ```js
