@@ -24,6 +24,12 @@ export const Message = styled.Text`
   margin-bottom: 4%;
 `;
 
+export const Warning = styled.Text`
+  font-size: 36px;
+  font-weight: bold;
+  color: #000;
+`;
+
 export const Title = styled.Text`
   font-size: 28px;
   font-weight: bold;

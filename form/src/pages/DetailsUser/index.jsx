@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useRoute, useNavigation, useIsFocused } from '@react-navigation/native';
 import { format } from 'date-fns';
 import api from '../../services/api';
 import {
@@ -17,6 +17,7 @@ import {
 function Details() {
     const route = useRoute();
     const navigation = useNavigation();
+    const isFocused = useIsFocused();
     const [user, setUser] = useState();
     const [loadingUser, setLoadingUser] = useState(false);
 
@@ -34,8 +35,11 @@ function Details() {
     }
 
     useEffect(() => {
-        loadUser();
-    }, []);
+        console.log(isFocused)
+        if (isFocused) {
+            loadUser();
+        }
+    }, [isFocused]);
 
     if (loadingUser) {
         return (

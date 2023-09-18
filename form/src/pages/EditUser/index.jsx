@@ -25,7 +25,7 @@ export default function App() {
         try {
             setLoadingUser(true);
             const response = await api.get(`users/${route.params?.id}`);
-            console.log(response.data)
+            //console.log(response.data)
             setUser(response.data);
         } catch (error) {
             console.error('Erro ao carregar os usuários:', error);
@@ -36,7 +36,7 @@ export default function App() {
 
     useEffect(() => {
         loadUser();
-    }, []);
+    }, [setLoadingUser]);
 
     const { control, handleSubmit, setValue, reset, formState: { errors } } = useForm({
         resolver: yupResolver(createUserSchema),
@@ -44,11 +44,12 @@ export default function App() {
 
     useEffect(() => {
         if (user) {
+            const cpfSemPontosETraço = user?.cpf.replace(/[.-]/g, '');
             // Configure os valores padrão quando o usuário estiver pronto
             setValue("name", user?.name || "");
             setValue("email", user?.email || "");
             setValue("password", ""); // Não exiba a senha atual, deixe em branco
-            setValue("cpf", user?.cpf || "");
+            setValue("cpf", cpfSemPontosETraço || "");
             setValue("birth_date", new Date(user?.birth_date) || new Date());
             setValue("admin", user?.admin || false);
             setValue("salary", user?.salary || "");
@@ -65,6 +66,7 @@ export default function App() {
             const birthDate = format(new Date(data.birth_date), 'yyyy-MM-dd');
 
             const dataApi = {
+                id: user.id,
                 name: data.name,
                 email: data.email.toLowerCase(),
                 password: data.password, // Mantenha a senha atual, se não for modificada
@@ -76,15 +78,20 @@ export default function App() {
                 image: data.image,
             };
 
+            //console.log('put', dataApi)
+            //console.log('put', user)
+
             // Envie os dados para a API
-            await api.put(`/users/${data.id}`, dataApi, {
+            const response = await api.put(`/users/${user.id}`, dataApi, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
 
+            //console.log(response)
+
             // Redirecione de volta à tela anterior
-            navigation.goBack();
+            navigation.navigate('DetailsUser', { id: user.id });
         } catch (error) {
             // Lide com erros de atualização aqui
             console.error("Erro ao atualizar dados:", error.message);

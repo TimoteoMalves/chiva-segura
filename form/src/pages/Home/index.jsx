@@ -11,16 +11,18 @@ import {
     Title,
     List,
     Button,
-    ButtonText
+    ButtonText,
+    Warning
 } from './styles'
 
 import { AuthContext } from '../../contexts/auth';
 
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useIsFocused } from '@react-navigation/native'
 
 export default function Home() {
     const { user, signOut, loading } = useContext(AuthContext);
     const navigation = useNavigation();
+    const isFocused = useIsFocused();
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [loadingUsers, setLoadingUsers] = useState(false);
@@ -29,6 +31,7 @@ export default function Home() {
         try {
             setLoadingUsers(true);
             const response = await api.get('users');
+            console.log(response)
             setUsers(response.data);
             setFilteredUsers(response.data);
         } catch (error) {
@@ -39,12 +42,14 @@ export default function Home() {
     }
 
     useEffect(() => {
-        loadUsers();
-    }, []);
+        if (isFocused) {
+            loadUsers();
+        }
+    }, [setFilteredUsers, isFocused]);
 
     const handleFilterChange = (filterText) => {
         if (filterText === '') {
-            console.log(users)
+            //console.log(users)
             setFilteredUsers(users);
         } else {
             const filtered = users.filter((user) =>
@@ -55,7 +60,7 @@ export default function Home() {
     };
 
     async function deleteUser(id) {
-        console.log(id);
+        //console.log(id);
         try {
             const token = await AsyncStorage.getItem('@authToken');
 
@@ -85,30 +90,39 @@ export default function Home() {
             </Container>
         )
     }
-
+    console.log(filteredUsers.length)
     return (
         <Container>
-            <Header>
-                <Message>
-                    {user && `Hey ${user.email}`}
-                </Message>
+            {filteredUsers.length > 0 ? (
+                <>
+                    <Header>
+                        <Message>
+                            {user && `Hey ${user.email}`}
+                        </Message>
 
-                <Button onPress={() => navigation.navigate('CreateUser')}>
-                    <ButtonText>Fazer registro</ButtonText>
-                </Button>
+                        <Button onPress={() => navigation.navigate('CreateUser')}>
+                            <ButtonText>Fazer registro</ButtonText>
+                        </Button>
 
-                <Button onPress={() => signOut()}>
-                    <ButtonText>Sair</ButtonText>
-                </Button>
-            </Header>
+                        <Button onPress={() => signOut()}>
+                            <ButtonText>Sair</ButtonText>
+                        </Button>
+                    </Header>
 
-            <Title>Your Employees</Title>
-            <Search onFilterChange={handleFilterChange} />
-            <List
-                data={filteredUsers}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => <UsersList data={item} onDelete={deleteUser} />}
-            />
+                    <Title>Your Employees</Title>
+                    <Search onFilterChange={handleFilterChange} />
+
+                    <List
+                        data={filteredUsers}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({ item }) => <UsersList data={item} onDelete={deleteUser} />}
+                    />
+                </>
+            )
+                :
+                <Warning>Sem resultados...</Warning>
+            }
+
         </Container>
     )
 }

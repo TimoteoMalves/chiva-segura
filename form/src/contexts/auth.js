@@ -20,10 +20,10 @@ function AuthProvider({ children }) {
     async function loadStorage() {
       const storageUser = await AsyncStorage.getItem('@authToken');
       const storedUserString = await AsyncStorage.getItem('@user');
-      console.log(storageUser);
-      console.log(storedUserString);
+      //console.log(storageUser);
+      //console.log(storedUserString);
       if (storageUser) {
-        console.log(storedUserString)
+       //console.log(storedUserString)
         setUser(JSON.parse(storedUserString));
         //navigation.navigate('Home');
         setLoading(false);

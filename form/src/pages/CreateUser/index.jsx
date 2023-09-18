@@ -49,7 +49,7 @@ export default function App() {
                 city: data.city,
                 image: data.image,
             };
-            console.log(dataApi);
+            //console.log(dataApi);
 
             // Envie os dados para a API
             await api.post('/users', dataApi);
