@@ -69,7 +69,7 @@ function Details() {
                     </Card>
 
                     <ReturnButton onPress={() => navigation.goBack()}>
-                        <ButtonText>Return</ButtonText>
+                        <ButtonText>Voltar</ButtonText>
                     </ReturnButton>
                 </Container>
             )}
