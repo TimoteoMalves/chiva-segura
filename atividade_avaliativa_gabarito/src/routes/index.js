@@ -1,7 +1,7 @@
 import { AntDesign } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Initial from '../pages/Initial';
-import TabRoutes from './stackRoutes';
+import StackRoutes from './stackRoutes';
 
 export default function Routes() {
   const Tab = createBottomTabNavigator();
@@ -37,7 +37,7 @@ export default function Routes() {
       />
       <Tab.Screen
         name="Home"
-        component={TabRoutes}
+        component={StackRoutes}
         options={{
           tabBarLabel: 'Home',
           tabBarShowLabel: false,

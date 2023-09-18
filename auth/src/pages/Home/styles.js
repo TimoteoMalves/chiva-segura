@@ -6,7 +6,7 @@ export const Container = styled.SafeAreaView`
   align-items: center;
 `;
 
-export const Message = styled.Text`
+export const Message = styled.Text` 
   font-size: 18px;
   font-weight: bold;
   margin-top: 24px;

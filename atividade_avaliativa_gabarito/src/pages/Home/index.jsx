@@ -25,7 +25,9 @@ function Home() {
   useEffect(() => {
     async function loadUsers() {
       try {
+        console.log(`teste`)
         const response = await api.get('users');
+        console.log(response)
         setUsers(response.data);
         setFilteredUsers(response.data);
         setLoading(false);
