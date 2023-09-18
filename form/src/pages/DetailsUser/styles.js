@@ -1,9 +1,14 @@
 import styled from 'styled-components/native';
+import { ScrollView } from "react-native";
 
 export const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
+`;
+
+export const ScrollViewContent = styled(ScrollView)`
+  margin-top: 12%;
 `;
 
 export const Card = styled.View`
@@ -16,7 +21,7 @@ export const Card = styled.View`
   padding-left: 16px;
   padding-right: 16px;
   z-index: 10;
-  height: 520px;
+  height: 540px;
   width: 90%;
   justify-content: center;
   align-content: center;
@@ -45,11 +50,12 @@ export const Text = styled.Text`
   color: #000;
 `;
 
-export const ReturnButton = styled.TouchableOpacity`
+export const Button = styled.TouchableOpacity`
   width: 240px;
   padding: 16px;
   border-radius: 12px;
   background-color: #3b3dbf;
+  margin-bottom: 12px;
 `;
 
 export const ButtonText = styled.Text`

@@ -21,7 +21,7 @@ const ImagePickerComponent = ({ onChange, value }) => {
             <Button
                 onPress={handleImagePicker}
             >
-                <Text>Nome da Imagem: {value.split('/').pop()}</Text>
+                <Text>Nome da Imagem: {value ? value.split('/').pop() : ""}</Text>
             </Button>
         </InputContainer>
     );

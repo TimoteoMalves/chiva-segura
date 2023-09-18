@@ -5,13 +5,14 @@ import { format } from 'date-fns';
 import api from '../../services/api';
 import {
     Container,
+    ScrollViewContent,
     Card,
     PerfilImage,
     Label,
     Text as StyledText,
-    ReturnButton,
+    Button,
     ButtonText
-} from './styles'; 
+} from './styles';
 
 function Details() {
     const route = useRoute();
@@ -47,31 +48,38 @@ function Details() {
     return (
         <>
             {user && (
-                <Container>
-                    <Card>
-                        <PerfilImage
-                            source={{ uri: user.image }}
-                        />
-                        <Label>Name</Label>
-                        <StyledText>{user.name}</StyledText>
-                        <Label>Email</Label>
-                        <StyledText>{user.email}</StyledText>
-                        <Label>CPF</Label>
-                        <StyledText>{user.cpf}</StyledText>
-                        <Label>Birth Date</Label>
-                        <StyledText>{format(new Date(user.birth_date), 'dd/MM/yyyy')}</StyledText>
-                        <Label>Profile</Label>
-                        <StyledText>{user.admin ? 'Admin' : 'User'}</StyledText>
-                        <Label>Salary</Label>
-                        <StyledText>R$ {user.salary}</StyledText>
-                        <Label>City</Label>
-                        <StyledText>{user.city}</StyledText>
-                    </Card>
+                <ScrollViewContent>
+                    <Container>
 
-                    <ReturnButton onPress={() => navigation.goBack()}>
-                        <ButtonText>Voltar</ButtonText>
-                    </ReturnButton>
-                </Container>
+                        <Card>
+                            <PerfilImage
+                                source={{ uri: user.image }}
+                            />
+                            <Label>Name</Label>
+                            <StyledText>{user.name}</StyledText>
+                            <Label>Email</Label>
+                            <StyledText>{user.email}</StyledText>
+                            <Label>CPF</Label>
+                            <StyledText>{user.cpf}</StyledText>
+                            <Label>Birth Date</Label>
+                            <StyledText>{format(new Date(user.birth_date), 'dd/MM/yyyy')}</StyledText>
+                            <Label>Profile</Label>
+                            <StyledText>{user.admin ? 'Admin' : 'User'}</StyledText>
+                            <Label>Salary</Label>
+                            <StyledText>R$ {user.salary}</StyledText>
+                            <Label>City</Label>
+                            <StyledText>{user.city}</StyledText>
+                        </Card>
+
+                        <Button onPress={() => navigation.navigate('EditUser', { id: user.id })}>
+                            <ButtonText>Editar</ButtonText>
+                        </Button>
+
+                        <Button onPress={() => navigation.goBack()}>
+                            <ButtonText>Voltar</ButtonText>
+                        </Button>
+                    </Container>
+                </ScrollViewContent>
             )}
         </>
     );

@@ -28,6 +28,4 @@ const CityPicker = ({ control, value, onChange, errors }) => {
     );
 };
 
-
-
 export default CityPicker;
