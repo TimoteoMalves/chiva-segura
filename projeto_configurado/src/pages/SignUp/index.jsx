@@ -72,7 +72,6 @@ export default function App() {
         birth_date: new Date(),
         city: "",
       });
-      console.log("obaaa");
       navigation.navigate("Home");
     } catch (error) {
       // Lide com erros de envio para a API aqui

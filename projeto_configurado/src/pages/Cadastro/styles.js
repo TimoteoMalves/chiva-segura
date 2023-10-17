@@ -84,10 +84,10 @@ export const SubmitButton = styled.TouchableOpacity`
   border-radius: 8px;
   background-color: #68b2f8;
   margin-top: 10px;
-  margin-left: 17px;
+  margin-left: 28px;
   align-items: center;
   justify-content: center;
-  bottom: 18%;
+  top: 5%;
 `;
 
 export const GoBackButton = styled.TouchableOpacity`
@@ -96,26 +96,16 @@ export const GoBackButton = styled.TouchableOpacity`
   border-radius: 8px;
   background-color: #68b2f8;
   margin-top: 10px;
-  margin-left: 17px;
+  margin-left: 28px;
   align-items: center;
   justify-content: center;
   bottom: 18%;
+  top: 5%;
 `;
-
-export const Link = styled.TouchableOpacity`
-  margin-top: 10px;
-  bottom: 18%;
-  margin-left: 25%;
-`;
-
 export const Input = styled.TextInput`
   width: 90%;
   font-size: 17px;
   border-radius: 8px;
   color: #121212;
   margin-bottom: 15px;
-`;
-
-export const LinkText = styled.Text`
-  color: #68b2f8;
 `;

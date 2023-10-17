@@ -39,16 +39,17 @@ export default function UsersList({ data, onDelete }) {
     closeConfirmationModal();
   };
 
-  // function handleDetails() {
-  //   navigation.navigate("DetailsUser", { id: data.id });
-  // }
+  function handleDetails() {
+    navigation.navigate("Detalhes", { id: data.id });
+  }
 
   return (
     <Card>
       <Titulo>{data.title}</Titulo>
       <Descricao>{data.description}</Descricao>
+
       <ContainerLabels>
-        <Labels>Categorias</Labels>
+        <Labels>Categoria</Labels>
         <Labels>Nível de risco</Labels>
         <Labels>Status</Labels>
       </ContainerLabels>
@@ -65,9 +66,7 @@ export default function UsersList({ data, onDelete }) {
         </ButtonStatus>
       </ContainerButtons>
 
-      <City>{data.city}</City>
-
-      <BotaoDetalhes>
+      <BotaoDetalhes onPress={() => handleDetails()}>
         <ButtonText>Ver detalhes</ButtonText>
       </BotaoDetalhes>
 

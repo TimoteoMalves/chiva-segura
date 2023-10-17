@@ -26,7 +26,7 @@ export default function Home() {
   const navigation = useNavigation();
 
   const isFocused = useIsFocused();
-  const [occurrence, setOccurrence = urence] = useState([]);
+  const [occurrence, setOccurrence] = useState([]);
   const [loadingOccurrence, setLoadingOccurrence] = useState(false);
 
   async function loadOccurrence() {

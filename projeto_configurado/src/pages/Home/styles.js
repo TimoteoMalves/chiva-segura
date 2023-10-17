@@ -32,10 +32,13 @@ export const HeaderText = styled(Text)`
 
 export const HeaderButton = styled.TouchableOpacity`
   vertical-align: top;
-  border-color: #fff;
+  border: 1px solid #fff;
   font-size: 25px;
   bottom: 110%;
-  margin-left: 64%;
+  margin-left: 60%;
+  align-items: center;
+  border-radius: 2%;
+  width: 30%;
 `;
 export const HeaderButtonText = styled(Text)`
   color: #fff;

@@ -11,7 +11,7 @@ function AuthProvider({ children }) {
   const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
-  signOut();
+  // signOut();
   useEffect(() => {
     async function loadStorage() {
       // AsyncStorage.clear();

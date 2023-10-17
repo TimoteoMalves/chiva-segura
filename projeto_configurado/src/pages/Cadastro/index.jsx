@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { Keyboard } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Keyboard, Alert, View, ActivityIndicator } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigation } from "@react-navigation/native";
 import signupimg from "../../assets/signupimg.png";
-
-import TextInput from "../../components/TextInput";
-import { createUserSchema } from "../../utils/createUserValidation";
-import { format } from "date-fns";
+import { createOccurrenceSchema } from "../../utils/createOccurrenceValidation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "../../services/api";
+
 import {
   Container,
   Header,
@@ -24,15 +23,12 @@ import {
   GoBackButton,
 } from "./styles";
 
-export default function App() {
+export default function Cadastro() {
   const navigation = useNavigation();
-  const [titulo, setTitulo] = useState("");
-  const [descricao, setDescricao] = useState("");
-  const [categoria, setCategoria] = useState("");
-  const [risco, setRisco] = useState("");
-  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const {
+    control,
     handleSubmit,
     reset,
     formState: { errors },
@@ -42,42 +38,50 @@ export default function App() {
       description: "",
       category: "",
       status: "",
-      status: "",
+      risk_level: 0,
     },
-    resolver: yupResolver(createUserSchema),
+    resolver: yupResolver(createOccurrenceSchema),
   });
 
   const onSubmit = async (data) => {
     Keyboard.dismiss();
-
     try {
-      // const birthDate = format(new Date(data.birth_date), "yyyy-MM-dd");
-      const dataApi = {
-        title: titulo,
-        description: descricao.toLowerCase(),
-        category: categoria,
-        status: risco,
-        status: status,
-      };
-      console.log(dataApi);
+      const token = await AsyncStorage.getItem("@authToken");
+      const dataApi = new FormData();
+      console.log(data);
+      dataApi.append("title", data.title);
+      dataApi.append("description", data.description);
+      dataApi.append("category", data.category);
+      dataApi.append("status", data.status);
+      dataApi.append("risk_level", Number(data.risk_level));
 
-      await api.post("/occurrences", dataApi);
-
-      // Limpando
+      const response = await api.post(`occurrences/`, dataApi, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(response);
       reset({
         title: "",
         description: "",
         category: "",
         status: "",
-        status: "",
+        risk_level: 0,
       });
-      console.log("obaaa");
       navigation.navigate("Home");
     } catch (error) {
-      console.error("Erro ao enviar dados:", error.message);
+      Alert.alert("Erro ao criar: ", error.message);
     }
   };
 
+  if (loading) {
+    return (
+      <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+        <ActivityIndicator color="#121212" size={45} />
+      </View>
+    );
+  }
   return (
     <Container>
       <HeadImg source={signupimg} />
@@ -85,70 +89,110 @@ export default function App() {
       <SubHeader>Insira os seus dados</SubHeader>
       <FormArea>
         <InputContainer>
-          <>
-            <Label>Título</Label>
-            <Input
-              name="titulo"
-              placeholder="Digite o título"
-              onChangeText={(text) => setTitulo(text.toLowerCase())}
-              value={titulo}
-            />
-          </>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <>
+                <Label>Título</Label>
+                <Input
+                  name="titulo"
+                  control={control}
+                  placeholder="Digite o título"
+                  onChangeText={onChange}
+                  errors={errors.title}
+                  value={value}
+                />
+              </>
+            )}
+            name="title"
+          />
         </InputContainer>
 
         <InputContainer>
-          <>
-            <Label>Descrição</Label>
-            <Input
-              name="descricao"
-              placeholder="Digite a descrição"
-              onChangeText={(text) => setDescricao(text.toLowerCase())}
-              value={descricao}
-            />
-          </>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <>
+                <Label>Descrição</Label>
+                <Input
+                  name="descricao"
+                  control={control}
+                  placeholder="Digite o descricao"
+                  onChangeText={onChange}
+                  errors={errors}
+                  value={value}
+                />
+              </>
+            )}
+            name="description"
+          />
         </InputContainer>
 
         <InputContainer>
-          <>
-            <Label>Categoria</Label>
-            <Input
-              name="categoria"
-              placeholder="Digite a categoria"
-              onChangeText={(text) => setCategoria(text.toLowerCase())}
-              value={categoria}
-            />
-          </>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <>
+                <Label>Categoria</Label>
+                <Input
+                  name="categoria"
+                  control={control}
+                  placeholder="Digite a categoria"
+                  onChangeText={onChange}
+                  errors={errors}
+                  value={value}
+                />
+              </>
+            )}
+            name="category"
+          />
         </InputContainer>
 
         <InputContainer>
-          <>
-            <Label>Nível de risco</Label>
-            <Input
-              name="risco"
-              placeholder="Selecione o nível de risco"
-              onChangeText={(text) => setRisco(text.toLowerCase())}
-              value={risco}
-            />
-          </>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <>
+                <Label>Nível de risco</Label>
+                <Input
+                  name="risco"
+                  control={control}
+                  placeholder="Digite o nivel de risco"
+                  onChangeText={onChange}
+                  errors={errors}
+                  value={value}
+                />
+              </>
+            )}
+            name="risk_level"
+          />
         </InputContainer>
         <InputContainer>
-          <>
-            <Label>Status</Label>
-            <Input
-              name="status"
-              placeholder="Selecione o status"
-              onChangeText={(text) => setStatus(text.toLowerCase())}
-              value={status}
-            />
-          </>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <>
+                <Label>Status</Label>
+                <Input
+                  name="status"
+                  control={control}
+                  placeholder="Digite o nivel de Status"
+                  onChangeText={onChange}
+                  errors={errors}
+                  value={value}
+                />
+              </>
+            )}
+            name="status"
+          />
         </InputContainer>
+        <SubmitButton onPress={handleSubmit(onSubmit)}>
+          <ButtonText>Cadastrar</ButtonText>
+        </SubmitButton>
+        <GoBackButton onPress={navigation.goBack}>
+          <ButtonText>Lista de ocorrências</ButtonText>
+        </GoBackButton>
       </FormArea>
-      <SubmitButton onPress={handleSubmit(onSubmit())}>
-        <ButtonText>Cadastrar</ButtonText>
-      </SubmitButton>
-      <GoBackButton onPress={navigation.goBack}>
-        <ButtonText>Lista de ocorrências</ButtonText>
-      </GoBackButton>
     </Container>
   );
 }

@@ -3,9 +3,10 @@ import styled from "styled-components/native";
 export const Card = styled.View`
   background-color: #fff;
   border-radius: 8px;
-  height: 63%;
+  height: 50%;
   margin: 7px;
   margin-left: 7%;
+  display: flex;
 `;
 
 export const Titulo = styled.Text`
@@ -30,7 +31,7 @@ export const BotaoDetalhes = styled.TouchableOpacity`
   height: 25px;
   border-radius: 5px;
   align-items: center;
-  top: 68%;
+  top: 60%;
   margin-left: 35%;
   font-weight: bold;
 `;
@@ -87,7 +88,8 @@ export const City = styled.Text`
   color: #000;
   font-size: 15px;
   font-weight: bold;
-  top: 30%;
+  top: 50%;
+  margin-left: 50%;
 `;
 
 export const ModalContainer = styled.Modal``;
